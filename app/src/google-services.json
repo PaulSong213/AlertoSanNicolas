@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1082840536972",
+    "project_id": "alerto-san-nicolas",
+    "storage_bucket": "alerto-san-nicolas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082840536972:android:53d93aa14d33dc1bd9e8a9",
+        "android_client_info": {
+          "package_name": "com.example.alertosannicolas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082840536972-ag7hvoaq9ckdjnnuk10a3i3qgof5ekof.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alertosannicolas",
+            "certificate_hash": "59cd701601ea1dc5a44d4cef2e1c8efb5cbf9e9a"
+          }
+        },
+        {
+          "client_id": "1082840536972-3rkpe1h9e5s9cpasmpmv4n5s90m5angq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsZhlHQKftz5coqZW7gVnvsIW0079l5dI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082840536972-3rkpe1h9e5s9cpasmpmv4n5s90m5angq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
