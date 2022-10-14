@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +15,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.firebase.ui.auth.data.model.User;
@@ -29,6 +34,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class AccountSetupActivity extends AppCompatActivity implements  View.OnClickListener{
 
     Authentication auth;
@@ -36,12 +46,13 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
     Button btnCreateAcc;
     EditText editTextFirstName;
     EditText editTextLastName;
-    EditText editTextEmail;
+    TextView viewTextEmail;
     EditText editTextContactNumber;
     EditText editTextAddress;
     FirebaseUser user;
     FlexboxLayout accountInfoFormLoader;
     FlexboxLayout accountInfoForm;
+    ImageView viewImageAcc;
     private DatabaseReference mDatabase;
 
     @Override
@@ -81,9 +92,10 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
         btnCreateAcc = findViewById(R.id.btnCreateAcc);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
-        editTextEmail = findViewById(R.id.editTextEmail);
+        viewTextEmail = findViewById(R.id.viewTextEmail);
         editTextContactNumber = findViewById(R.id.editTextContactNumber);
         editTextAddress = findViewById(R.id.editTextAddress);
+        viewImageAcc = findViewById(R.id.viewImageAcc);
 
         accountInfoFormLoader = findViewById(R.id.accountInfoFormLoader);
         accountInfoForm = findViewById(R.id.accountInfoForm);
@@ -95,9 +107,13 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
 
         btnCreateAcc.setOnClickListener(this);
 
-        editTextEmail.setText(auth.getUser().getEmail());
-        editTextEmail.setEnabled(false);
+        viewTextEmail.setText(auth.getUser().getEmail());
 
+        //set image src from the current user logged in email
+        Glide.with(this)
+                .asBitmap()
+                .load(auth.getUser().getPhotoUrl())
+                .into(viewImageAcc);
     }
 
 
@@ -114,7 +130,7 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
                 String uid = auth.getUser().getUid();
                 String firstName = editTextFirstName.getText().toString();
                 String lastName = editTextLastName.getText().toString();
-                String email = editTextEmail.getText().toString();
+                String email = auth.getUser().getEmail();
                 String contactNumber = editTextContactNumber.getText().toString();
                 String address = editTextAddress.getText().toString();
                 UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"");
@@ -170,6 +186,24 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
                 }
             }
         });
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            Log.e("src",src);
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            Log.e("Bitmap","returned");
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Exception",e.getMessage());
+            return null;
+        }
     }
 
 }
