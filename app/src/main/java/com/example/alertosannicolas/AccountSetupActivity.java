@@ -126,13 +126,22 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
                 break;
 
             case R.id.btnCreateAcc:
-                //TODO: add validation on account information form
+                Boolean isAllValidated = true;
+                String requiredMessage = "This field is required.";
                 String uid = auth.getUser().getUid();
                 String firstName = editTextFirstName.getText().toString();
                 String lastName = editTextLastName.getText().toString();
                 String email = auth.getUser().getEmail();
                 String contactNumber = editTextContactNumber.getText().toString();
                 String address = editTextAddress.getText().toString();
+
+                //input validation
+                isAllValidated = isEditTextRequiredValidated(editTextFirstName, firstName);
+                isAllValidated = isEditTextRequiredValidated(editTextLastName, lastName);
+                isAllValidated = isEditTextRequiredValidated(editTextContactNumber, contactNumber);
+                isAllValidated = isEditTextRequiredValidated(editTextAddress, address);
+
+                if(!isAllValidated)return;
                 UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"");
                 mDatabase.child("users").child(uid).setValue(user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -188,22 +197,16 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
         });
     }
 
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            Log.e("src",src);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Exception",e.getMessage());
-            return null;
+    /*
+    Validate an edit text
+    Return the boolean if the input is validated
+    */
+    public static Boolean isEditTextRequiredValidated(EditText input, String value){
+        if(value.isEmpty()){
+            input.setError("This field is required.");
+            return false;
         }
+        return true;
     }
 
 }
