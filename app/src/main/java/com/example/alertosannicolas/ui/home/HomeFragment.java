@@ -8,13 +8,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.alertosannicolas.Authentication;
 import com.example.alertosannicolas.MainActivity;
 import com.example.alertosannicolas.R;
 import com.example.alertosannicolas.databinding.FragmentHomeBinding;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,9 +33,7 @@ public class HomeFragment extends Fragment {
     TextView loggedInNameView;
     TextView loggedInEmailView;
     Button signOutBtn;
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-
+    Authentication auth;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -50,23 +52,8 @@ public class HomeFragment extends Fragment {
         loggedInNameView = root.findViewById(R.id.loggedInNameView);
         signOutBtn = root.findViewById(R.id.signOutBtn);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(root.getContext(), gso);
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(root.getContext());
-        if(acct != null){
-            String personName = acct.getDisplayName();
-            String personEmail = acct.getEmail();
-            loggedInNameView.setText(personName);
-            loggedInEmailView.setText(personEmail);
-        }
 
-        signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
         return root;
     }
 
@@ -77,12 +64,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void signOut(){
-        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                getActivity().finish();
-                startActivity(new Intent(getContext(), MainActivity.class));
-            }
-        });
+        auth.signOut();
     }
 }

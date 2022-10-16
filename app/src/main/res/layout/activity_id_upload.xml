@@ -1,19 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IdUploadActivity">
-
-    <Button
-        android:id="@+id/signOutBtn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/homeNotificationBarColor"
+    android:orientation="vertical"
+    android:id="@+id/parent"
+    >
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="0dp"
-        android:text="Change Account"
-        android:textSize="12dp" />
+        android:paddingTop="20dp"
+        app:flexDirection="row_reverse"
+        app:justifyContent="flex_end"
+        android:layout_marginBottom="-10dp"
+        >
 
-</RelativeLayout>
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            app:flexDirection="column"
+            app:justifyContent="center"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barangay"
+                android:textColor="@color/md_blue_grey_600"
+                android:textStyle="bold"
+                android:textSize="45dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID card"
+                android:textColor="@color/md_blue_grey_600"
+                android:textStyle="bold"
+                android:textSize="45dp"
+                android:layout_marginTop="-10dp"
+                />
+        </com.google.android.flexbox.FlexboxLayout>
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_id"
+            android:scaleType="fitStart"
+            app:layout_flexShrink="@integer/material_motion_duration_short_1"
+            android:layout_marginRight="10dp"
+            />
+    </com.google.android.flexbox.FlexboxLayout>
+    <LinearLayout
+        android:layout_weight="8"
+        app:layout_alignSelf="flex_end"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/form_bg"
+        android:orientation="vertical"
+        >
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flexDirection="column"
+                android:paddingHorizontal="20dp"
+                >
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/barangay_upload_description"
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="255dp"
+                    android:layout_height="155dp"
+                    app:cardCornerRadius="10dp"
+                    app:layout_alignSelf="center"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="250dp"
+                        android:layout_height="150dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/viewImageId"
+                            android:layout_width="250dp"
+                            android:layout_height="155dp"
+                            android:src="@drawable/ic_upload"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/proofIdErrorMsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_alignSelf="center"
+                    android:text="Proof Image is Required!"
+                    android:textColor="@color/md_red_800"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    />
+                <Button
+                    android:id="@+id/selectImageBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Image"
+                    app:layout_alignSelf="center"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    />
+
+                <Button
+                    android:id="@+id/continueBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_alignSelf="center"
+                    android:layout_marginTop="20dp"
+                    android:text="Continue"
+                    />
+
+            </com.google.android.flexbox.FlexboxLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>

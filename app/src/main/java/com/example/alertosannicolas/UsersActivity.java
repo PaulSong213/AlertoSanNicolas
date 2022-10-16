@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class UsersActivity extends AppCompatActivity {
 
     private ActivityUsersBinding binding;
-
+    public Authentication auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,8 @@ public class UsersActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        //allow logged in users only
-        Authentication auth = new Authentication(this, registerForActivityResult(
+        //Todo: allow logged in users only
+        auth = new Authentication(this, registerForActivityResult(
                 new FirebaseAuthUIActivityResultContract(),
                 new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
                     @Override

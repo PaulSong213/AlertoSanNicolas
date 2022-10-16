@@ -126,46 +126,50 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
                 break;
 
             case R.id.btnCreateAcc:
-                Boolean isAllValidated = true;
-                String requiredMessage = "This field is required.";
-                String uid = auth.getUser().getUid();
-                String firstName = editTextFirstName.getText().toString();
-                String lastName = editTextLastName.getText().toString();
-                String email = auth.getUser().getEmail();
-                String contactNumber = editTextContactNumber.getText().toString();
-                String address = editTextAddress.getText().toString();
-
-                //input validation
-                isAllValidated = isEditTextRequiredValidated(editTextFirstName, firstName);
-                isAllValidated = isEditTextRequiredValidated(editTextLastName, lastName);
-                isAllValidated = isEditTextRequiredValidated(editTextContactNumber, contactNumber);
-                isAllValidated = isEditTextRequiredValidated(editTextAddress, address);
-
-                if(!isAllValidated)return;
-                UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"");
-                mDatabase.child("users").child(uid).setValue(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Write was successful!
-                                // Navigate to upload proof ID
-                                finish();
-                                Intent idUploadActivity = new Intent(getApplicationContext(), IdUploadActivity.class);
-                                startActivity(idUploadActivity);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Write failed
-                                Snackbar.make(findViewById(R.id.activity_account_setup_layout), R.string.errorMessage, Snackbar.LENGTH_LONG)
-                                        .show();
-                            }
-                        });;
+                createAccount();
                 break;
             default:
 
         }
+    }
+
+    private void createAccount() {
+        Boolean isAllValidated = true;
+        String requiredMessage = "This field is required.";
+        String uid = auth.getUser().getUid();
+        String firstName = editTextFirstName.getText().toString();
+        String lastName = editTextLastName.getText().toString();
+        String email = auth.getUser().getEmail();
+        String contactNumber = editTextContactNumber.getText().toString();
+        String address = editTextAddress.getText().toString();
+
+        //input validation
+        isAllValidated = isEditTextRequiredValidated(editTextFirstName, firstName);
+        isAllValidated = isEditTextRequiredValidated(editTextLastName, lastName);
+        isAllValidated = isEditTextRequiredValidated(editTextContactNumber, contactNumber);
+        isAllValidated = isEditTextRequiredValidated(editTextAddress, address);
+
+        if(!isAllValidated)return;
+        UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"");
+        mDatabase.child("users").child(uid).setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Write was successful!
+                        // Navigate to upload proof ID
+                        finish();
+                        Intent idUploadActivity = new Intent(getApplicationContext(), IdUploadActivity.class);
+                        startActivity(idUploadActivity);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Write failed
+                        Snackbar.make(findViewById(R.id.activity_account_setup_layout), R.string.errorMessage, Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                });;
     }
 
     /*
@@ -186,7 +190,7 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
                         accountInfoFormLoader.setVisibility(View.GONE);
                     }else{
                         finish();
-                        Intent accountSetupActivity = new Intent(getApplicationContext(), UsersActivity.class);
+                        Intent accountSetupActivity = new Intent(getApplicationContext(), IdUploadActivity.class);
                         startActivity(accountSetupActivity);
                     }
                 }
