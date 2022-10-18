@@ -30,9 +30,6 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-    TextView loggedInNameView;
-    TextView loggedInEmailView;
-    Button signOutBtn;
     Authentication auth;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,13 +43,6 @@ public class HomeFragment extends Fragment {
 
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-
-        loggedInEmailView = root.findViewById(R.id.loggedInEmailView);
-        loggedInNameView = root.findViewById(R.id.loggedInNameView);
-        signOutBtn = root.findViewById(R.id.signOutBtn);
-
-
 
         return root;
     }
