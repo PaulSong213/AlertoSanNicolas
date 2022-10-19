@@ -53,7 +53,7 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
     FlexboxLayout accountInfoFormLoader;
     FlexboxLayout accountInfoForm;
     ImageView viewImageAcc;
-    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
 
         accountInfoFormLoader = findViewById(R.id.accountInfoFormLoader);
         accountInfoForm = findViewById(R.id.accountInfoForm);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         signOutBtn.setOnClickListener(this);
         user = auth.getUser();
 
@@ -134,6 +134,7 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
     }
 
     private void createAccount() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Boolean isAllValidated = true;
         String requiredMessage = "This field is required.";
         String uid = auth.getUser().getUid();
@@ -178,7 +179,8 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
      * else let the user fill up the sign up form
      */
     private void allowUnregisteredOnly(FirebaseUser user){
-        this.mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {

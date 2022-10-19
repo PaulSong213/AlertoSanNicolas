@@ -11,6 +11,7 @@ import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +21,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +72,7 @@ public class Authentication {
     public void allowAnonymousOnly(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
-            navigateToActivity(AccountSetupActivity.class);
+            dynamicUserNavigate(user);
         }
     }
 
@@ -127,6 +131,69 @@ public class Authentication {
        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
+    /*
+    Check where the user navigate based on their credential
+    if user has no personal information - navigate to AccountSetupActivity
+    else if user is whitelisted as admin - navigate to AdminActivity
+    else (user is not admin and has personal info) - navigate to UsersActivity
+    */
+    public void dynamicUserNavigate(FirebaseUser user) {
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        //check if user has personal information
+        mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    Object snapshot = task.getResult().getValue();
+                    if(snapshot == null ){
+                        //User does not have personal information
+                        navigateToActivity(AccountSetupActivity.class);
+                        return;
+                    }else{
+                        //user has personal information
+                        //check if user is admin
+                        navigateToAdminOrUser(user);
+                    }
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
+    }
+
+    public void navigateToAdminOrUser(FirebaseUser user) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        //check if user is admin
+        mDatabase.child("whitelistedAdmins").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Object snapshot = task.getResult().getValue();
+                    if(snapshot == null ){
+                        //User is not an admin
+                        navigateToActivity(UsersActivity.class);
+                        return;
+                    }else{
+                        //User is an admin
+                        navigateToActivity(AdminsActivity.class);
+                        return;
+                    }
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
+    }
+
+    public void navigateToActivity(Activity currentActivity,Class<?> toNavigateClass) {
+        currentActivity.finish();
+        Intent newActivity = new Intent(currentActivity.getApplicationContext(), toNavigateClass);
+        currentActivity.startActivity(newActivity);
+    }
 
 
 }
