@@ -1,4 +1,4 @@
-package com.example.alertosannicolas.ui.notifications;
+package com.example.alertosannicolas.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

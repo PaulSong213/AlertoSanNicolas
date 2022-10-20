@@ -127,7 +127,7 @@ public class Authentication {
     }
 
 
-    FirebaseUser getUser() {
+    public FirebaseUser getUser() {
        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
@@ -167,7 +167,8 @@ public class Authentication {
     public void navigateToAdminOrUser(FirebaseUser user) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         //check if user is admin
-        mDatabase.child("whitelistedAdmins").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        String firebaseValidEmail = user.getEmail().toString().replace('.','|');
+        mDatabase.child("whitelistedAdmins").child(firebaseValidEmail).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {

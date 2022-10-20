@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,7 @@ public class IdUploadActivity extends AppCompatActivity implements View.OnClickL
     StorageReference storageReference;
     ProgressDialog progressDialog;
     TextView proofIdErrorMsg;
+
 
     ActivityResultLauncher<Intent> mLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -196,9 +198,8 @@ public class IdUploadActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Write was successful!
-                        finish();
-                        Intent userActivity = new Intent(getApplicationContext(), UsersActivity.class);
-                        startActivity(userActivity);
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        auth.dynamicUserNavigate(user);
                         if(progressDialog.isShowing())
                             progressDialog.dismiss();
                     }

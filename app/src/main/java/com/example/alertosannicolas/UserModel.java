@@ -9,6 +9,10 @@ public class UserModel {
     private String address;
     private String proofIdLink;
 
+    public UserModel() {
+        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+    }
+
     public UserModel(String uid, String email, String firstName, String lastName, String contactNumber, String address, String proofId) {
         this.uid = uid;
         this.email = email;
@@ -75,5 +79,7 @@ public class UserModel {
         this.proofIdLink = proofId;
     }
 
-
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 }
