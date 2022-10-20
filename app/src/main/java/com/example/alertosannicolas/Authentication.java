@@ -6,6 +6,7 @@ import static android.app.Activity.RESULT_OK;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
@@ -175,7 +176,7 @@ public class Authentication {
                     Object snapshot = task.getResult().getValue();
                     if(snapshot == null ){
                         //User is not an admin
-                        navigateToActivity(UsersActivity.class);
+                        navigateIfVeirified(user);
                         return;
                     }else{
                         //User is an admin
@@ -185,6 +186,28 @@ public class Authentication {
                 }
                 else {
                     Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
+    }
+
+    private void navigateIfVeirified(FirebaseUser user) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    UserModel userInfo = task.getResult().getValue(UserModel.class);
+                    Log.d("firebase", String.valueOf(userInfo));
+                    if(userInfo.getIsVerified()){
+                        navigateToActivity(UsersActivity.class);
+                    }else{
+                        navigateToActivity(PendingActivity.class);
+                    }
+                    return;
                 }
             }
         });

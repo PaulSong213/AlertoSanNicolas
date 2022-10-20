@@ -8,12 +8,13 @@ public class UserModel {
     private String contactNumber;
     private String address;
     private String proofIdLink;
+    private Boolean isVerified;
 
     public UserModel() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public UserModel(String uid, String email, String firstName, String lastName, String contactNumber, String address, String proofId) {
+    public UserModel(String uid, String email, String firstName, String lastName, String contactNumber, String address, String proofId, Boolean isVerified) {
         this.uid = uid;
         this.email = email;
         this.firstName = firstName;
@@ -21,6 +22,7 @@ public class UserModel {
         this.contactNumber = contactNumber;
         this.address = address;
         this.proofIdLink = proofId;
+        this.isVerified = isVerified;
     }
 
     public String getUid() {
@@ -81,5 +83,13 @@ public class UserModel {
 
     public String getFullName(){
         return firstName + " " + lastName;
+    }
+
+    public Boolean getIsVerified(){
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified){
+        this.isVerified = isVerified;
     }
 }

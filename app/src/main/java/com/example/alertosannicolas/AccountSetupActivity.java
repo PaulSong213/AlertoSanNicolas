@@ -151,7 +151,7 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
         isAllValidated = isEditTextRequiredValidated(editTextAddress, address);
 
         if(!isAllValidated)return;
-        UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"");
+        UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"", false);
         mDatabase.child("users").child(uid).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

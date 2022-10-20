@@ -91,8 +91,6 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-
-        //binding.viewTextFullName.setText(auth);
     }
 
     @Override
