@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation2"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_emergency">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.alertosannicolas.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_emergency"
+        android:name="com.example.alertosannicolas.ui.emergency.EmergencyFragment"
+        android:label="Emergency"
+        tools:layout="@layout/fragment_emegency" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.alertosannicolas.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_verify_users"
+        android:name="com.example.alertosannicolas.ui.verifyusers.VerifyusersFragment"
+        android:label="Verify Users"
+        tools:layout="@layout/fragment_addadmin" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.alertosannicolas.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_add_admin"
+        android:name="com.example.alertosannicolas.ui.addadmin.AddadminFragment"
+        android:label="Add Admin"
+        tools:layout="@layout/fragment_addadmin" />
 
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.alertosannicolas.ui.profile.ProfileFragment"
-        android:label="@string/menu_slideshow"
+        android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
