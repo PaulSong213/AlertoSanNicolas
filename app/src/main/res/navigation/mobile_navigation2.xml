@@ -24,6 +24,12 @@
         tools:layout="@layout/fragment_addadmin" />
 
     <fragment
+        android:id="@+id/nav_statistic"
+        android:name="com.example.alertosannicolas.ui.statistic.StatisticFragment"
+        android:label="Statistics"
+        tools:layout="@layout/fragment_statistic" />
+
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.alertosannicolas.ui.profile.ProfileFragment"
         android:label="My Profile"

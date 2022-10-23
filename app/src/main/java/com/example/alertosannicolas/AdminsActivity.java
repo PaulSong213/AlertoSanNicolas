@@ -1,15 +1,9 @@
 package com.example.alertosannicolas;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.Menu;
 
-import com.example.alertosannicolas.ui.emergency.EmergencyFragment;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -38,7 +32,7 @@ public class AdminsActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_profile,R.id.nav_emergency, R.id.nav_verify_users, R.id.nav_add_admin)
+                R.id.nav_statistic,R.id.nav_profile,R.id.nav_emergency, R.id.nav_verify_users, R.id.nav_add_admin)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_admins);
