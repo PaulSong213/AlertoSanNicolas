@@ -165,10 +165,14 @@ public class Authentication {
         });
     }
 
+    public static  String toValidFirebaseEmail(String email){
+        return email.toString().replace('.','|');
+    }
+
     public void navigateToAdminOrUser(FirebaseUser user) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         //check if user is admin
-        String firebaseValidEmail = user.getEmail().toString().replace('.','|');
+        String firebaseValidEmail = toValidFirebaseEmail(user.getEmail());
         mDatabase.child("whitelistedAdmins").child(firebaseValidEmail).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

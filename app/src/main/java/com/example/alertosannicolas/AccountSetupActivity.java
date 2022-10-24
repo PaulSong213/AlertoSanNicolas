@@ -1,5 +1,7 @@
 package com.example.alertosannicolas;
 
+import static com.example.alertosannicolas.Authentication.toValidFirebaseEmail;
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -126,14 +128,39 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
                 break;
 
             case R.id.btnCreateAcc:
-                createAccount();
+                checkIfAdmin();
                 break;
             default:
 
         }
     }
 
-    private void createAccount() {
+    private void checkIfAdmin() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        String currentFirebaseEmail = toValidFirebaseEmail(auth.getUser().getEmail());
+        mDatabase.child("whitelistedAdmins").child(currentFirebaseEmail).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    //returns true if admin then user will be automatically
+                    if(task.getResult().getValue() == null){
+                        createAccount(false);
+                    }else{
+                        createAccount(true);
+                    }
+                    System.out.println(task.getResult().getValue());
+                    System.out.println(currentFirebaseEmail);
+                }
+            }
+        });
+    }
+
+
+    private void createAccount(Boolean isVerified) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Boolean isAllValidated = true;
         String requiredMessage = "This field is required.";
@@ -151,15 +178,19 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
         isAllValidated = isEditTextRequiredValidated(editTextAddress, address);
 
         if(!isAllValidated)return;
-        UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"", false);
+        UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"", isVerified);
         mDatabase.child("users").child(uid).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Write was successful!
                         // Navigate to upload proof ID
+                        Class toNavigateClass = IdUploadActivity.class;
+                        if(isVerified){
+                            toNavigateClass = AdminsActivity.class;
+                        }
                         finish();
-                        Intent idUploadActivity = new Intent(getApplicationContext(), IdUploadActivity.class);
+                        Intent idUploadActivity = new Intent(getApplicationContext(),toNavigateClass );
                         startActivity(idUploadActivity);
                     }
                 })

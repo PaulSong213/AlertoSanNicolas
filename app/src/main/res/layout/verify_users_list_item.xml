@@ -18,7 +18,7 @@
         <androidx.cardview.widget.CardView
 
             android:layout_width="80dp"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             app:cardCornerRadius="10dp"
             app:layout_alignSelf="center"
             android:layout_marginBottom="10dp"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="email"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 />
 
         </com.google.android.flexbox.FlexboxLayout>
