@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -19,6 +21,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +31,11 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     Authentication auth;
+    TextInputEditText email;
+    TextInputEditText password;
+    Button signin;
+    TextView errorEmail;
+    TextView errorPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +67,41 @@ public class MainActivity extends AppCompatActivity {
         ));
         auth.googleBtnUi();
         auth.allowAnonymousOnly();
+
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        signin = findViewById(R.id.signin);
+        errorEmail = findViewById(R.id.errorEmail);
+        errorPassword = findViewById(R.id.errorPassword);
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateInputs();
+            }
+        });
+    }
+
+    private void validateInputs() {
+        String emailVal = email.getText().toString();
+        String passwordVal = password.getText().toString();
+
+        if(emailVal.isEmpty()){
+            errorEmail.setText("Email is Required");
+            errorEmail.setVisibility(View.VISIBLE);
+        }else{
+            errorEmail.setText("");
+            errorEmail.setVisibility(View.GONE);
+        }
+
+        if(passwordVal.isEmpty()){
+            errorPassword.setText("Password is Required");
+            errorPassword.setVisibility(View.VISIBLE);
+        }else{
+            errorPassword.setText("");
+            errorPassword.setVisibility(View.GONE);
+        }
+
     }
 
     public void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
