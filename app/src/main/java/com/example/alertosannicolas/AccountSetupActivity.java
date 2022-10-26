@@ -163,7 +163,6 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
     private void createAccount(Boolean isVerified) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Boolean isAllValidated = true;
-        String requiredMessage = "This field is required.";
         String uid = auth.getUser().getUid();
         String firstName = editTextFirstName.getText().toString();
         String lastName = editTextLastName.getText().toString();
@@ -172,10 +171,10 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
         String address = editTextAddress.getText().toString();
 
         //input validation
-        isAllValidated = isEditTextRequiredValidated(editTextFirstName, firstName);
-        isAllValidated = isEditTextRequiredValidated(editTextLastName, lastName);
-        isAllValidated = isEditTextRequiredValidated(editTextContactNumber, contactNumber);
-        isAllValidated = isEditTextRequiredValidated(editTextAddress, address);
+        isAllValidated = isEditTextRequiredValidated(editTextFirstName);
+        isAllValidated = isEditTextRequiredValidated(editTextLastName);
+        isAllValidated = isEditTextRequiredValidated(editTextContactNumber);
+        isAllValidated = isEditTextRequiredValidated(editTextAddress);
 
         if(!isAllValidated)return;
         UserModel user = new UserModel(uid,email,firstName,lastName,contactNumber,address,"", isVerified);
@@ -238,9 +237,11 @@ public class AccountSetupActivity extends AppCompatActivity implements  View.OnC
     Validate an edit text
     Return the boolean if the input is validated
     */
-    public static Boolean isEditTextRequiredValidated(EditText input, String value){
-        if(value.isEmpty()){
-            input.setError("This field is required.");
+    public static Boolean isEditTextRequiredValidated(EditText input){
+        String fieldName = input.getHint().toString();
+        String fieldValue = input.getText().toString();
+        if(fieldValue.isEmpty()){
+            input.setError("This " + fieldName + " is required.");
             return false;
         }
         return true;

@@ -4,49 +4,49 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#A0C4EB"
     android:orientation="vertical"
-    android:id="@+id/activity_main_layout"
+    android:id="@+id/parent"
     >
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:scaleType="centerCrop"
+        android:layout_height="180dp"
+        android:scaleType="centerInside"
         android:layout_weight="2"
-        android:src="@drawable/barangay_bg"
+        android:src="@drawable/signup_banner"
         />
+
     <LinearLayout
-        android:layout_weight="8"
-        app:layout_alignSelf="flex_end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="8"
         android:background="@drawable/form_bg"
         android:orientation="vertical"
         android:padding="20dp"
-
+        app:layout_alignSelf="flex_end"
         >
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:flexDirection="column">
+
             <ImageView
-                android:visibility="gone"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:src="@drawable/alerto_logo"
+                android:visibility="gone"
                 app:layout_alignSelf="center"
 
                 />
+
             <TextView
                 style="@style/loginHeader"
-                app:layout_alignSelf="center"
-                android:textSize="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
                 android:layout_marginBottom="20dp"
-                />
+                android:text="Sign Up"
+                android:textSize="40dp"
+                app:layout_alignSelf="center" />
         </com.google.android.flexbox.FlexboxLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,25 +62,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:inputType="textEmailAddress"
-                />
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
-            android:id="@+id/errorEmail"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email is Required"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/md_red_700"
-            />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            app:startIconDrawable="@drawable/ic_password"
-            >
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
@@ -91,64 +81,40 @@
 
                 />
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
-            android:id="@+id/errorPassword"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password is Required"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/md_red_700"
-            />
 
-        <Button
-            android:id="@+id/signin"
-            android:layout_marginTop="15dp"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            />
+            android:hint="Confirm Password"
+            app:startIconDrawable="@drawable/ic_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:inputType="textPassword"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Create Account" />
+
+        <Button
+            android:id="@+id/signin"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="No Account? Sign up"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="or"
-            android:textAlignment="center"
-            android:layout_marginVertical="20dp"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            />
-
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            app:flexDirection="column">
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/google_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:textSize="18sp"
-                app:colorScheme="dark"
-                />
-        </com.google.android.flexbox.FlexboxLayout>
+            android:text="Sign in instead" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>
