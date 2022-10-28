@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
+import com.example.alertosannicolas.UserModel;
 import com.example.alertosannicolas.databinding.FragmentConfirmverifyDialogListDialogBinding;
 import com.example.alertosannicolas.databinding.FragmentConfirmverifyDialogListDialogItemBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -30,13 +31,18 @@ public class ConfirmverifyDialogFragment extends BottomSheetDialogFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_ITEM_COUNT = "item_count";
+    public  UserModel user;
     private FragmentConfirmverifyDialogListDialogBinding binding;
 
+    public ConfirmverifyDialogFragment(UserModel user) {
+        this.user = user;
+    }
+
     // TODO: Customize parameters
-    public static ConfirmverifyDialogFragment newInstance(int itemCount) {
-        final ConfirmverifyDialogFragment fragment = new ConfirmverifyDialogFragment();
+    public ConfirmverifyDialogFragment newInstance(UserModel user) {
+        final ConfirmverifyDialogFragment fragment = new ConfirmverifyDialogFragment(user);
         final Bundle args = new Bundle();
-        args.putInt(ARG_ITEM_COUNT, itemCount);
+        args.putInt(ARG_ITEM_COUNT, 1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,11 +72,11 @@ public class ConfirmverifyDialogFragment extends BottomSheetDialogFragment {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView text;
+        final TextView viewTextFullName;
 
         ViewHolder(FragmentConfirmverifyDialogListDialogItemBinding binding) {
             super(binding.getRoot());
-            text = binding.text;
+            viewTextFullName = binding.viewTextFullName;
         }
 
     }
@@ -93,7 +99,7 @@ public class ConfirmverifyDialogFragment extends BottomSheetDialogFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.text.setText(String.valueOf(position));
+            holder.viewTextFullName.setText(user.getFullName());
         }
 
         @Override

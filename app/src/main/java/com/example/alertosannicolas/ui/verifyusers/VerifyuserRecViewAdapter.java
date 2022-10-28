@@ -73,9 +73,8 @@ public class VerifyuserRecViewAdapter extends RecyclerView.Adapter<VerifyuserRec
     }
 
     private void showPopupVerify(UserModel user) {
-        //Todo: show a modal to verify the user
-        Toast.makeText(context, user.getUid(), Toast.LENGTH_SHORT).show();
-        ConfirmverifyDialogFragment.newInstance(30).show(parentFragmentManager, "dialog");
+        ConfirmverifyDialogFragment c = new ConfirmverifyDialogFragment(user);
+        c.newInstance(user).show(parentFragmentManager, "dialog");
     }
 
 

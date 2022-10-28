@@ -1,13 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/text"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:paddingLeft="@dimen/list_item_spacing"
-    android:paddingTop="@dimen/list_item_spacing_half"
-    android:paddingRight="@dimen/list_item_spacing"
-    android:paddingBottom="@dimen/list_item_spacing_half"
-    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-    tools:text="Hello" />
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/imageLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center_horizontal"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/barangay_bg"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#9DA5A4"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/imageLayout">
+        </LinearLayout>
+        <Button
+            android:id="@+id/verifyBtn"
+            android:layout_below="@id/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Verify"
+            style="@style/Widget.MaterialComponents.Button"
+            />
+        <LinearLayout
+            android:id="@+id/userNameContainer"
+            android:layout_below="@id/verifyBtn"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            >
+            <TextView
+                android:id="@+id/viewTextFullName"
+                android:textStyle="bold"
+                android:textSize="24dp"
+                android:text="Loading..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reasonCourse" />
+
+        </LinearLayout>
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/userImageContainer"
+            android:layout_below="@+id/userNameContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:justifyContent="center"
+            >
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_marginLeft="-40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:cardCornerRadius="250dp"
+                app:layout_alignSelf="center"
+                app:cardBackgroundColor="@color/white">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:cardCornerRadius="250dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/viewImageAcc"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/person_image"
+                        android:scaleType="centerCrop"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/viewTextEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                app:layout_alignSelf="center"
+                android:layout_marginLeft="10dp"
+                />
+        </com.google.android.flexbox.FlexboxLayout>
+        <LinearLayout
+            android:layout_below="@id/userImageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="30dp"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Contact Number: "
+                    android:textAlignment="textEnd"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/profile_info_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Residence Address: "
+                    android:layout_gravity="end"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/profile_info_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp">
+                <TextView
+                    android:id="@+id/viewTextContactNumber"
+                    android:text="Loading..."
+                    android:textSize="@dimen/profile_info_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <TextView
+                    android:text="Loading..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/viewTextAddress"
+                    android:textSize="@dimen/profile_info_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
