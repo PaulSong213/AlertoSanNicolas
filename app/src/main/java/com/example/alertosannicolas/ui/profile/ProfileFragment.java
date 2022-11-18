@@ -84,10 +84,12 @@ public class ProfileFragment extends Fragment {
                     binding.viewTextEmail.setText(userInfo.getEmail());
                     binding.viewTextAddress.setText(userInfo.getAddress());
                     //set image src to logged in user
-                    Glide.with(binding.getRoot())
-                            .asBitmap()
-                            .load(auth.getUser().getPhotoUrl())
-                            .into(binding.viewImageProfile);
+                    if(auth.getUser().getPhotoUrl() != null){
+                        Glide.with(binding.getRoot())
+                                .asBitmap()
+                                .load(auth.getUser().getPhotoUrl())
+                                .into(binding.viewImageProfile);
+                    }
                 }
             }
         });
