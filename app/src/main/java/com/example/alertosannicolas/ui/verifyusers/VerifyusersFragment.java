@@ -58,10 +58,11 @@ public class VerifyusersFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserModel user = snapshot.getValue(UserModel.class);
                     if(!user.getIsVerified()){
-                        pendingUsers.add(user);
+                        pendingUsers.add(0,user);
                         verifyuserRecViewAdapter.setUsers(pendingUsers);
                     }
                 }
+                verifyuserRecViewAdapter.setUsers(pendingUsers);
             }
 
             @Override

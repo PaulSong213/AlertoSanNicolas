@@ -55,7 +55,7 @@ public class VerifyuserRecViewAdapter extends RecyclerView.Adapter<VerifyuserRec
         holder.verifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupVerify(verifyingUser);
+                showPopupVerify(verifyingUser, holder.parent);
             }
         });
     }
@@ -72,9 +72,9 @@ public class VerifyuserRecViewAdapter extends RecyclerView.Adapter<VerifyuserRec
         }
     }
 
-    private void showPopupVerify(UserModel user) {
-        ConfirmverifyDialogFragment c = new ConfirmverifyDialogFragment(user);
-        c.newInstance(user).show(parentFragmentManager, "dialog");
+    private void showPopupVerify(UserModel user, View v) {
+        ConfirmverifyDialogFragment c = new ConfirmverifyDialogFragment(user, v);
+        c.newInstance(user, v).show(parentFragmentManager, "dialog");
     }
 
 
@@ -97,6 +97,7 @@ public class VerifyuserRecViewAdapter extends RecyclerView.Adapter<VerifyuserRec
         private Button verifyBtn;
         private FlexboxLayout emptyUsers;
         private ScrollView listUsers;
+        private FlexboxLayout parent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,6 +107,7 @@ public class VerifyuserRecViewAdapter extends RecyclerView.Adapter<VerifyuserRec
             txtEmail = itemView.findViewById(R.id.txtEmail);
             viewImageId = itemView.findViewById(R.id.viewImageId);
             verifyBtn = itemView.findViewById(R.id.verifyBtn);
+            parent = itemView.findViewById(R.id.parent);
         }
     }
 
