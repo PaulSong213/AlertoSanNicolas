@@ -5,15 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:flexDirection="column"
-    tools:context=".ui.statistic.StatisticFragment">
+    android:paddingVertical="20dp"
+    android:paddingHorizontal="10dp"
+    tools:context=".ui.statistic.StatisticFragment"
 
+    >
 
-   <TextView
-       android:id="@+id/textStatistic"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       app:layout_alignSelf="center"
-       android:text="Statistic"
-       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Emergencies Per Month"
+        android:textSize="20sp"
+        />
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/barchart"
+        app:layout_flexGrow="@integer/material_motion_duration_long_2"
+        />
 
 </com.google.android.flexbox.FlexboxLayout>

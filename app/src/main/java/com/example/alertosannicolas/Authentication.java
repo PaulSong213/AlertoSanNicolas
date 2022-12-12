@@ -169,6 +169,10 @@ public class Authentication {
         return email.toString().replace('.','|');
     }
 
+    public static  String toNormalEmailFromFirebase(String email){
+        return email.toString().replace('|','.');
+    }
+
     public void navigateToAdminOrUser(FirebaseUser user) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         //check if user is admin

@@ -20,11 +20,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,10 +42,18 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
-public class SubmitReport extends AppCompatActivity {
+public class SubmitReport extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
-    String emergencyType = "";
+    String emergencyType = "others";
+    String othersHelp = "";
+
+    CheckBox ambulanceBox;
+    CheckBox barangayTanodBox;
+    CheckBox policeBox;
+    CheckBox fireTruckBox;
+
     ImageView viewImageCaptured;
+    FlexboxLayout helpSelection;
     Button submitReportBtn;
     ProgressDialog dialog;
     Uri uri;
@@ -96,6 +107,22 @@ public class SubmitReport extends AppCompatActivity {
                 submitReport();
             }
         });
+
+        helpSelection = findViewById(R.id.helpSelection);
+
+        ambulanceBox = findViewById(R.id.ambulanceBox);
+        barangayTanodBox = findViewById(R.id.barangayTanodBox);
+        policeBox = findViewById(R.id.policeBox);
+        fireTruckBox = findViewById(R.id.fireTruckBox);
+
+        ambulanceBox.setOnCheckedChangeListener(this);
+        barangayTanodBox.setOnCheckedChangeListener(this);
+        policeBox.setOnCheckedChangeListener(this);
+        fireTruckBox.setOnCheckedChangeListener(this);
+
+        if(emergencyType.equals("others")){
+            helpSelection.setVisibility(View.VISIBLE);
+        }
     }
 
     private void submitReport() {
@@ -170,8 +197,19 @@ public class SubmitReport extends AppCompatActivity {
             case "injuries":
                 return "Ambulance";
             default:
-                return "Barangay Tanod";
+                //others
+                return othersHelp;
         }
     }
 
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        String toAddHelp = compoundButton.getText() + ", ";
+        if(b){
+            othersHelp += toAddHelp;
+        }else{
+            othersHelp = othersHelp.replace(toAddHelp, "");
+        }
+    }
 }

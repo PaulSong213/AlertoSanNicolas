@@ -11,11 +11,49 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="350dp"
         android:id="@+id/viewImageId"
         app:layout_alignSelf="center"
         android:layout_marginBottom="10dp"
         />
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/helpSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexDirection="column"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="What Assistance do you need?"
+            />
+        <CheckBox
+            android:id="@+id/ambulanceBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ambulance"/>
+        <CheckBox
+            android:id="@+id/barangayTanodBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Barangay Tanod"/>
+
+        <CheckBox
+            android:id="@+id/policeBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Police"/>
+
+        <CheckBox
+            android:id="@+id/fireTruckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fire truck"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+
     <Button
         android:id="@+id/submitReportBtn"
         android:layout_width="wrap_content"

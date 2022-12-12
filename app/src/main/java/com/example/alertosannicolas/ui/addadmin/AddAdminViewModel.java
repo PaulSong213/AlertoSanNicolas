@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AddadminViewModel extends ViewModel {
+public class AddAdminViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public AddadminViewModel() {
+    public AddAdminViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is add admin fragment");
+        mText.setValue("This is admin fragment");
     }
 
     public LiveData<String> getText() {

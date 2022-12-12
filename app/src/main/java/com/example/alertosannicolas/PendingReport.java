@@ -2,6 +2,9 @@ package com.example.alertosannicolas;
 
 import static android.content.ContentValues.TAG;
 
+import static com.google.firebase.storage.internal.Util.ISO_8601_FORMAT;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,6 +16,10 @@ import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PendingReport extends AppCompatActivity {
     Authentication auth;
@@ -53,7 +61,56 @@ public class PendingReport extends AppCompatActivity {
 
     private void setHelpRecieved() {
         DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference().child("reports").child(auth.getUser().getUid());
-        mPostReference.removeValue();
+        mPostReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    ReportModel report = task.getResult().getValue(ReportModel.class);
+                    String key = FirebaseDatabase.getInstance().getReference("reportsHistory").push().getKey();
+                    DatabaseReference historyReference = FirebaseDatabase.getInstance().getReference()
+                            .child("reportsHistory")
+                            .child(key)
+                            ;
+
+                    historyReference.setValue(report)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Write was successful!
+                                    historyReference.child("date").setValue(System.currentTimeMillis())
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    // Write was successful!
+                                                    mPostReference.removeValue();
+
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // Write failed
+                                                    System.out.println(e.getMessage());
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Write failed
+                                    System.out.println(e.getMessage());
+                                }
+                            });
+
+                }
+            }
+        });
+
     }
 
     private void listenToReportChange() {
