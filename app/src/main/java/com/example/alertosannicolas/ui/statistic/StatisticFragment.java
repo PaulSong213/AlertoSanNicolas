@@ -65,12 +65,20 @@ public class StatisticFragment extends Fragment {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                for (int i = 0; i < valuesList.length; i ++){
+                    valuesList[i] = 0;
+                }
                 // Get Post object and use the values to update the UI
 //                Post post = dataSnapshot.getValue(Post.class);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ReportHistoryModel report = snapshot.getValue(ReportHistoryModel.class);
-                    Date date = new Date(report.getDate());
-                    valuesList[date.getMonth()] += 1;
+                    System.out.println(report.getDate());
+                    if(report.getDate() != null){
+                        Date date = new Date(report.getDate());
+                        System.out.println(date.getMonth());
+                        if(valuesList[date.getMonth()] != null) valuesList[date.getMonth()] += 1;
+                    }
+
                 }
                 setUpChart(valuesList);
             }
